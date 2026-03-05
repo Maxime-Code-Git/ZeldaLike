@@ -1,14 +1,15 @@
 # =========================
 # UNITY (Dossiers à ignorer)
 # =========================
-/[Ll]ibrary/
-/[Tt]emp/
-/[Oo]bj/
-/[Bb]uild/
-/[Bb]uilds/
-/[Ll]ogs/
-/[Uu]ser[Ss]ettings/
-/[Mm]emoryCaptures/
+# Unity project is inside /ZeldaLike
+/ZeldaLike/[Ll]ibrary/
+/ZeldaLike/[Tt]emp/
+/ZeldaLike/[Oo]bj/
+/ZeldaLike/[Ll]ogs/
+/ZeldaLike/[Bb]uild/
+/ZeldaLike/[Bb]uilds/
+/ZeldaLike/[Uu]ser[Ss]ettings/
+/ZeldaLike/[Mm]emoryCaptures/
 
 # =========================
 # UNITY (Fichiers générés)
@@ -44,6 +45,7 @@ sysinfo.txt
 !.vscode/extensions.json
 *.code-workspace
 .history/
+.vs/
 
 # =========================
 # macOS

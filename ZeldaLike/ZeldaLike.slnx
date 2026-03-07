@@ -1,6 +1,6 @@
 ﻿<Solution>
+  <Project Path="PlayerMovement.csproj" />
   <Project Path="BBehaviour.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
-  <Project Path="PlayerMovement.csproj" />
 </Solution>

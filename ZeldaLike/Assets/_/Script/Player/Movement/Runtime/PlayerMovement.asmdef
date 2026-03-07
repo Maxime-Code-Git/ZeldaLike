@@ -2,7 +2,8 @@
     "name": "PlayerMovement",
     "rootNamespace": "PlayerMovement",
     "references": [
-        "GUID:496543d53faee4e6baf474f77a24e7a3"
+        "GUID:496543d53faee4e6baf474f77a24e7a3",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -1,5 +1,6 @@
 using Codice.CM.Common.Tree;
 using UnityEngine;
+using Interact;
 
 namespace PlayerMovement
 {
@@ -26,6 +27,15 @@ namespace PlayerMovement
         public float sideHopForce = 6f;
         public float sidehopHeight = 2f;
         public float dodgeDuration = 0.5f;
+
+        [Header("Roll Settings")]
+        public float rollForce = 10f;
+        public float rollDuration = 0.5f;
+
+        [Header("Interaction Settings")]
+        public float interactionDistance = 2.5f;
+
+        public IInteractable CurrentInteractable { get; private set; }
 
         private PlayerState _currentState;
         

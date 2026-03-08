@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Interact;
 
 namespace PlayerMovement
 {
@@ -32,6 +33,8 @@ namespace PlayerMovement
 
         public override void Update()
         {
+            Vector2 input = _brain.InputHandler.MoveInput;
+
             // 1. Sortie du Focus
             if (!_brain.InputHandler.FocusTriggered || _target == null)
             {
@@ -41,25 +44,49 @@ namespace PlayerMovement
             }
 
             // 2. Gestion des inputs d'Action (Sauts/Esquives)
-            bool isActionPressed = _brain.InputHandler.ActionTriggered;
+           bool isActionPressed = _brain.InputHandler.ActionTriggered;
+            
             if (isActionPressed && !_wasActionPressed && _brain.controller.isGrounded && _dodgeTimer <= 0f)
             {
-                Vector2 input = _brain.InputHandler.MoveInput;
+                // PRIORITÉ 1 : INTERACTION (Même en Focus !)
+                RaycastHit hit;
+                Vector3 rayOrigin = _brain.transform.position + (Vector3.up * 1f);
+                
+                // On utilise la même distance réglable
+                if (Physics.Raycast(rayOrigin, _brain.transform.forward, out hit, _brain.interactionDistance))
+                {
+                    if (hit.collider.TryGetComponent(out IInteractable interactableObj))
+                    {
+                        _brain.Verbose("FOCUS ACTION : INTERACTION AVEC " + hit.collider.name);
+                        interactableObj.Interact();
+                        
+                        _wasActionPressed = isActionPressed;
+                        return; // ON ARRÊTE TOUT ICI : Pas d'esquive ni d'attaque
+                    }
+                }
+
+                // PRIORITÉ 2 : ESQUIVES ET ATTAQUES (Si rien n'est interactif)
 
                 if (input.y < -0.5f) 
                 {
                     _brain.Verbose("ACTION : BACKFLIP !");
+                    _brain.playerAnimator.SetTrigger("TrgBackflip"); 
                     StartDodge(-_brain.transform.forward, _brain.backFlipDistance, _brain.backFlipHeight);
                 }
                 else if (Mathf.Abs(input.x) > 0.5f)
                 {
                     _brain.Verbose("ACTION : SIDE HOP !");
                     float directionSign = Mathf.Sign(input.x);
+                    
+                    if (directionSign < 0) _brain.playerAnimator.SetTrigger("TrgDodgeLeft");
+                    else _brain.playerAnimator.SetTrigger("TrgDodgeRight");
+
                     StartDodge(_brain.transform.right * directionSign, _brain.sideHopForce, _brain.sidehopHeight);
                 }
                 else if (input.y > 0.5f)
                 {
                     _brain.Verbose("ACTION : DASH AVANT !");
+                    _brain.playerAnimator.SetTrigger("TrgDodgeForward");
                     StartDodge(_brain.transform.forward, _brain.strafeSpeed * 2f, _brain.sidehopHeight);
                 }
                 else
@@ -68,19 +95,10 @@ namespace PlayerMovement
                 }
             }
             _wasActionPressed = isActionPressed;
-        }
 
-        private void StartDodge(Vector3 direction, float force, float height)
-        {
-            _currentMovement = direction * force;
-            _velocityY = MathF.Sqrt(height * -2f * Physics.gravity.y);
-            _dodgeTimer = _brain.dodgeDuration;
-        }
-
-        public override void FixedUpdate()
-        {
+            //movement logic
             if (_target == null) return;
-            Vector2 input = _brain.InputHandler.MoveInput;
+            //Vector2 input = _brain.InputHandler.MoveInput;
 
             // 1. Z-TARGETING : Le joueur fixe la cible (sur l'axe horizontal)
             Vector3 lookPosition = new Vector3(_target.position.x, _brain.transform.position.y, _target.position.z);
@@ -89,7 +107,7 @@ namespace PlayerMovement
             if (_dodgeTimer > 0f)
             {
                 // Si on esquive, on réduit le timer et on n'écoute PAS la manette
-                _dodgeTimer -= Time.fixedDeltaTime;
+                _dodgeTimer -= Time.deltaTime;
             }
             else
             {
@@ -110,15 +128,27 @@ namespace PlayerMovement
             }
             else
             {
-                _velocityY += Physics.gravity.y * 2f * Time.fixedDeltaTime; // Accélération de la chute
+                _velocityY += Physics.gravity.y * 2f * Time.deltaTime; // Accélération de la chute
             }
 
             // 4. ASSEMBLAGE ET DÉPLACEMENT
             Vector3 finalMovement = _currentMovement + (Vector3.up * _velocityY);
-            _brain.controller.Move(finalMovement * Time.fixedDeltaTime);
+            _brain.controller.Move(finalMovement * Time.deltaTime);
             // 5. Animation
-            _brain.playerAnimator.SetFloat("InputX", input.x);
-            _brain.playerAnimator.SetFloat("InputY", input.y);
+            _brain.playerAnimator.SetFloat("InputX", input.x, 0.1f, Time.deltaTime);
+            _brain.playerAnimator.SetFloat("InputY", input.y, 0.1f, Time.deltaTime);
+        }
+
+        private void StartDodge(Vector3 direction, float force, float height)
+        {
+            _currentMovement = direction * force;
+            _velocityY = MathF.Sqrt(height * -2f * Physics.gravity.y);
+            _dodgeTimer = _brain.dodgeDuration;
+        }
+
+        public override void FixedUpdate()
+        {
+            
         }
     }
 }

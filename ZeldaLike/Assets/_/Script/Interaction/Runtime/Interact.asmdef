@@ -1,10 +1,8 @@
 {
-    "name": "PlayerMovement",
-    "rootNamespace": "PlayerMovement",
+    "name": "Interact",
+    "rootNamespace": "Interact",
     "references": [
-        "GUID:496543d53faee4e6baf474f77a24e7a3",
-        "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:97e1173f485b24c75acb24ababc23b9b"
+        "GUID:496543d53faee4e6baf474f77a24e7a3"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

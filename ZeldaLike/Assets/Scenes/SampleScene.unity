@@ -1170,6 +1170,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_FantasyMale
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: b8032b54a2c304bcb97524d955ae21bf, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 922326acc74164d3aa1cfafe2849ce94, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

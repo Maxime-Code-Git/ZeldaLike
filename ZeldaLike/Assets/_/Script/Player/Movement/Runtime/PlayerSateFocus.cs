@@ -20,7 +20,14 @@ namespace PlayerMovement
             base.Enter(brain);
             _brain = brain;
             _target = _brain.focusScanner.currentTarget;
+            _brain.playerAnimator.SetBool("IsFocusing", true);
             _brain.Verbose("ENTRÉE EN MODE FOCUS sur : " + _target.name);
+        }
+        public override void Exit(PlayerBrain brain)
+        {
+            base.Exit(brain);
+            _brain.playerAnimator.SetBool("IsFocusing", false);
+            _brain.Verbose("SORTIE DU MODE FOCUS");
         }
 
         public override void Update()
@@ -73,6 +80,7 @@ namespace PlayerMovement
         public override void FixedUpdate()
         {
             if (_target == null) return;
+            Vector2 input = _brain.InputHandler.MoveInput;
 
             // 1. Z-TARGETING : Le joueur fixe la cible (sur l'axe horizontal)
             Vector3 lookPosition = new Vector3(_target.position.x, _brain.transform.position.y, _target.position.z);
@@ -86,7 +94,6 @@ namespace PlayerMovement
             else
             {
                 // Si on n'esquive pas, on lit la manette et on applique l'inertie
-                Vector2 input = _brain.InputHandler.MoveInput;
                 Vector3 targetMovement = (_brain.transform.right * input.x * _brain.strafeSpeed) + 
                                          (_brain.transform.forward * input.y * _brain.focusForwardSpeed);
 
@@ -109,6 +116,9 @@ namespace PlayerMovement
             // 4. ASSEMBLAGE ET DÉPLACEMENT
             Vector3 finalMovement = _currentMovement + (Vector3.up * _velocityY);
             _brain.controller.Move(finalMovement * Time.fixedDeltaTime);
+            // 5. Animation
+            _brain.playerAnimator.SetFloat("InputX", input.x);
+            _brain.playerAnimator.SetFloat("InputY", input.y);
         }
     }
 }

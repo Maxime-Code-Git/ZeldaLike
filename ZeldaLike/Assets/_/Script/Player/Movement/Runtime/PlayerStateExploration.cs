@@ -94,6 +94,9 @@ namespace PlayerMovement
                 Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
                 _brain.transform.rotation = Quaternion.Slerp(_brain.transform.rotation, targetRotation, _brain.rotationSpeed * Time.fixedDeltaTime);
             }
+            // 7. Animation 
+            float currentHorizontalSpeed = new Vector3(_brain.controller.velocity.x, 0f, _brain.controller.velocity.z).magnitude;
+            _brain.playerAnimator.SetFloat("Speed", currentHorizontalSpeed);
         }
     }
 }

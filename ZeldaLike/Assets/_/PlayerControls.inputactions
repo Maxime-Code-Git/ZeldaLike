@@ -16,10 +16,10 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Look",
-                    "type": "Value",
+                    "name": "ALook",
+                    "type": "Button",
                     "id": "fbcb16eb-3f1b-45ea-bfa8-f66d7ada0745",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -117,7 +117,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Look",
+                    "action": "ALook",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -128,7 +128,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Look",
+                    "action": "ALook",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

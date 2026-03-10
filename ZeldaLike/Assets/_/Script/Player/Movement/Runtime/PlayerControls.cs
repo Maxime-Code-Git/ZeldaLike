@@ -104,10 +104,10 @@ namespace PlayerMovement
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Look"",
-                    ""type"": ""Value"",
+                    ""name"": ""ALook"",
+                    ""type"": ""Button"",
                     ""id"": ""fbcb16eb-3f1b-45ea-bfa8-f66d7ada0745"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -205,7 +205,7 @@ namespace PlayerMovement
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Look"",
+                    ""action"": ""ALook"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -216,7 +216,7 @@ namespace PlayerMovement
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Look"",
+                    ""action"": ""ALook"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -272,7 +272,7 @@ namespace PlayerMovement
             // Player
             m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
-            m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
+            m_Player_ALook = m_Player.FindAction("ALook", throwIfNotFound: true);
             m_Player_Focus = m_Player.FindAction("Focus", throwIfNotFound: true);
             m_Player_Action = m_Player.FindAction("Action", throwIfNotFound: true);
         }
@@ -356,7 +356,7 @@ namespace PlayerMovement
         private readonly InputActionMap m_Player;
         private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
         private readonly InputAction m_Player_Move;
-        private readonly InputAction m_Player_Look;
+        private readonly InputAction m_Player_ALook;
         private readonly InputAction m_Player_Focus;
         private readonly InputAction m_Player_Action;
         /// <summary>
@@ -375,9 +375,9 @@ namespace PlayerMovement
             /// </summary>
             public InputAction @Move => m_Wrapper.m_Player_Move;
             /// <summary>
-            /// Provides access to the underlying input action "Player/Look".
+            /// Provides access to the underlying input action "Player/ALook".
             /// </summary>
-            public InputAction @Look => m_Wrapper.m_Player_Look;
+            public InputAction @ALook => m_Wrapper.m_Player_ALook;
             /// <summary>
             /// Provides access to the underlying input action "Player/Focus".
             /// </summary>
@@ -415,9 +415,9 @@ namespace PlayerMovement
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
-                @Look.started += instance.OnLook;
-                @Look.performed += instance.OnLook;
-                @Look.canceled += instance.OnLook;
+                @ALook.started += instance.OnALook;
+                @ALook.performed += instance.OnALook;
+                @ALook.canceled += instance.OnALook;
                 @Focus.started += instance.OnFocus;
                 @Focus.performed += instance.OnFocus;
                 @Focus.canceled += instance.OnFocus;
@@ -438,9 +438,9 @@ namespace PlayerMovement
                 @Move.started -= instance.OnMove;
                 @Move.performed -= instance.OnMove;
                 @Move.canceled -= instance.OnMove;
-                @Look.started -= instance.OnLook;
-                @Look.performed -= instance.OnLook;
-                @Look.canceled -= instance.OnLook;
+                @ALook.started -= instance.OnALook;
+                @ALook.performed -= instance.OnALook;
+                @ALook.canceled -= instance.OnALook;
                 @Focus.started -= instance.OnFocus;
                 @Focus.performed -= instance.OnFocus;
                 @Focus.canceled -= instance.OnFocus;
@@ -495,12 +495,12 @@ namespace PlayerMovement
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnMove(InputAction.CallbackContext context);
             /// <summary>
-            /// Method invoked when associated input action "Look" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// Method invoked when associated input action "ALook" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>
             /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnLook(InputAction.CallbackContext context);
+            void OnALook(InputAction.CallbackContext context);
             /// <summary>
             /// Method invoked when associated input action "Focus" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>
